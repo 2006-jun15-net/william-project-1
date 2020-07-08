@@ -29,5 +29,6 @@ steps:
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
+    echo This is a multi-line script thanks to the pipe.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
