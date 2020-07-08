@@ -4,11 +4,21 @@
 # https://aka.ms/yaml
 
 trigger:
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - README.md
+
+pr:
 - master
 
+# Defines what agent the job will run on
 pool:
   vmImage: 'ubuntu-latest'
 
+# a job has steps
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
