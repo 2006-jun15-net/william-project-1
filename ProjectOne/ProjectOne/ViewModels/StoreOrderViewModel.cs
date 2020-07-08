@@ -1,42 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace Project1.Domain.Model
 {
     public class StoreOrderViewModel
     {
-        private int? _amount;
+        [Display(Name = "ID")]
+        public int Id { get; set; }
 
-        public int? Amount
-        {
-            get => _amount;
-            set
-            {
-                if (value > -1)
-                {
-                    _amount = value;
-                }
-                else
-                {
-                    throw new Exception("Amount must not be null.");
-                }
-            }
-        }
+        [Required]
+        [Range(0, 1_000_000_000)]
+        public int? Amount { get; set; }
 
+        [Display(Name = "Product ID")]
         public int ProductId { get; set; }
+
+        [Display(Name = "Order ID")]
         public int OrderId { get; set; }
     }
 }
 
-
-
-//public partial class StoreOrder
-//{
-//    public int? Amount { get; set; }
-//    public int ProductId { get; set; }
-//    public int OrderId { get; set; }
-
-//    public virtual OrderHistory Order { get; set; }
-//    public virtual Product Product { get; set; }
-//}

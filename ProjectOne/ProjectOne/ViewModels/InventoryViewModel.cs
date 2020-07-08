@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Project1.Domain.Model
 {
     public class InventoryViewModel
     {
         [Required]
-        [Range(0, 1000)]
+        [Range(0, 1_000)]
         public int? Amount { get; set; }
+
+        [Display(Name = "ID")]
+        public int Id { get; set; }
 
         [Display(Name = "Location ID")]
         public int LocationId { get; set; }

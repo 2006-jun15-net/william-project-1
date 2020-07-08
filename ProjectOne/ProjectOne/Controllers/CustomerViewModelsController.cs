@@ -10,22 +10,22 @@ using ProjectOne.Data;
 
 namespace ProjectOne.Controllers
 {
-    public class StoreOrderController : Controller
+    public class CustomerViewModelsController : Controller
     {
         private readonly ProjectOneContext _context;
 
-        public StoreOrderController(ProjectOneContext context)
+        public CustomerViewModelsController(ProjectOneContext context)
         {
             _context = context;
         }
 
-        // GET: StoreOrder
+        // GET: CustomerViewModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.StoreOrderViewModel.ToListAsync());
+            return View(await _context.CustomerViewModel.ToListAsync());
         }
 
-        // GET: StoreOrder/Details/5
+        // GET: CustomerViewModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace ProjectOne.Controllers
                 return NotFound();
             }
 
-            var storeOrderViewModel = await _context.StoreOrderViewModel
+            var customerViewModel = await _context.CustomerViewModel
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (storeOrderViewModel == null)
+            if (customerViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(storeOrderViewModel);
+            return View(customerViewModel);
         }
 
-        // GET: StoreOrder/Create
+        // GET: CustomerViewModels/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: StoreOrder/Create
+        // POST: CustomerViewModels/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Amount,ProductId,OrderId")] StoreOrderViewModel storeOrderViewModel)
+        public async Task<IActionResult> Create([Bind("FirstName,LastName,Id,Email")] CustomerViewModel customerViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(storeOrderViewModel);
+                _context.Add(customerViewModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(storeOrderViewModel);
+            return View(customerViewModel);
         }
 
-        // GET: StoreOrder/Edit/5
+        // GET: CustomerViewModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ProjectOne.Controllers
                 return NotFound();
             }
 
-            var storeOrderViewModel = await _context.StoreOrderViewModel.FindAsync(id);
-            if (storeOrderViewModel == null)
+            var customerViewModel = await _context.CustomerViewModel.FindAsync(id);
+            if (customerViewModel == null)
             {
                 return NotFound();
             }
-            return View(storeOrderViewModel);
+            return View(customerViewModel);
         }
 
-        // POST: StoreOrder/Edit/5
+        // POST: CustomerViewModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Amount,ProductId,OrderId")] StoreOrderViewModel storeOrderViewModel)
+        public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,Id,Email")] CustomerViewModel customerViewModel)
         {
-            if (id != storeOrderViewModel.Id)
+            if (id != customerViewModel.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ProjectOne.Controllers
             {
                 try
                 {
-                    _context.Update(storeOrderViewModel);
+                    _context.Update(customerViewModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StoreOrderViewModelExists(storeOrderViewModel.Id))
+                    if (!CustomerViewModelExists(customerViewModel.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ProjectOne.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(storeOrderViewModel);
+            return View(customerViewModel);
         }
 
-        // GET: StoreOrder/Delete/5
+        // GET: CustomerViewModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ProjectOne.Controllers
                 return NotFound();
             }
 
-            var storeOrderViewModel = await _context.StoreOrderViewModel
+            var customerViewModel = await _context.CustomerViewModel
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (storeOrderViewModel == null)
+            if (customerViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(storeOrderViewModel);
+            return View(customerViewModel);
         }
 
-        // POST: StoreOrder/Delete/5
+        // POST: CustomerViewModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var storeOrderViewModel = await _context.StoreOrderViewModel.FindAsync(id);
-            _context.StoreOrderViewModel.Remove(storeOrderViewModel);
+            var customerViewModel = await _context.CustomerViewModel.FindAsync(id);
+            _context.CustomerViewModel.Remove(customerViewModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StoreOrderViewModelExists(int id)
+        private bool CustomerViewModelExists(int id)
         {
-            return _context.StoreOrderViewModel.Any(e => e.Id == id);
+            return _context.CustomerViewModel.Any(e => e.Id == id);
         }
     }
 }

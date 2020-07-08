@@ -10,22 +10,22 @@ using ProjectOne.Data;
 
 namespace ProjectOne.Controllers
 {
-    public class StoreOrderController : Controller
+    public class StoreLocationController : Controller
     {
         private readonly ProjectOneContext _context;
 
-        public StoreOrderController(ProjectOneContext context)
+        public StoreLocationController(ProjectOneContext context)
         {
             _context = context;
         }
 
-        // GET: StoreOrder
+        // GET: StoreLocation
         public async Task<IActionResult> Index()
         {
-            return View(await _context.StoreOrderViewModel.ToListAsync());
+            return View(await _context.StoreLocationViewModel.ToListAsync());
         }
 
-        // GET: StoreOrder/Details/5
+        // GET: StoreLocation/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace ProjectOne.Controllers
                 return NotFound();
             }
 
-            var storeOrderViewModel = await _context.StoreOrderViewModel
+            var storeLocationViewModel = await _context.StoreLocationViewModel
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (storeOrderViewModel == null)
+            if (storeLocationViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(storeOrderViewModel);
+            return View(storeLocationViewModel);
         }
 
-        // GET: StoreOrder/Create
+        // GET: StoreLocation/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: StoreOrder/Create
+        // POST: StoreLocation/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Amount,ProductId,OrderId")] StoreOrderViewModel storeOrderViewModel)
+        public async Task<IActionResult> Create([Bind("Id,Name,Address")] StoreLocationViewModel storeLocationViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(storeOrderViewModel);
+                _context.Add(storeLocationViewModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(storeOrderViewModel);
+            return View(storeLocationViewModel);
         }
 
-        // GET: StoreOrder/Edit/5
+        // GET: StoreLocation/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ProjectOne.Controllers
                 return NotFound();
             }
 
-            var storeOrderViewModel = await _context.StoreOrderViewModel.FindAsync(id);
-            if (storeOrderViewModel == null)
+            var storeLocationViewModel = await _context.StoreLocationViewModel.FindAsync(id);
+            if (storeLocationViewModel == null)
             {
                 return NotFound();
             }
-            return View(storeOrderViewModel);
+            return View(storeLocationViewModel);
         }
 
-        // POST: StoreOrder/Edit/5
+        // POST: StoreLocation/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Amount,ProductId,OrderId")] StoreOrderViewModel storeOrderViewModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address")] StoreLocationViewModel storeLocationViewModel)
         {
-            if (id != storeOrderViewModel.Id)
+            if (id != storeLocationViewModel.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ProjectOne.Controllers
             {
                 try
                 {
-                    _context.Update(storeOrderViewModel);
+                    _context.Update(storeLocationViewModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StoreOrderViewModelExists(storeOrderViewModel.Id))
+                    if (!StoreLocationViewModelExists(storeLocationViewModel.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ProjectOne.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(storeOrderViewModel);
+            return View(storeLocationViewModel);
         }
 
-        // GET: StoreOrder/Delete/5
+        // GET: StoreLocation/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ProjectOne.Controllers
                 return NotFound();
             }
 
-            var storeOrderViewModel = await _context.StoreOrderViewModel
+            var storeLocationViewModel = await _context.StoreLocationViewModel
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (storeOrderViewModel == null)
+            if (storeLocationViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(storeOrderViewModel);
+            return View(storeLocationViewModel);
         }
 
-        // POST: StoreOrder/Delete/5
+        // POST: StoreLocation/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var storeOrderViewModel = await _context.StoreOrderViewModel.FindAsync(id);
-            _context.StoreOrderViewModel.Remove(storeOrderViewModel);
+            var storeLocationViewModel = await _context.StoreLocationViewModel.FindAsync(id);
+            _context.StoreLocationViewModel.Remove(storeLocationViewModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StoreOrderViewModelExists(int id)
+        private bool StoreLocationViewModelExists(int id)
         {
-            return _context.StoreOrderViewModel.Any(e => e.Id == id);
+            return _context.StoreLocationViewModel.Any(e => e.Id == id);
         }
     }
 }

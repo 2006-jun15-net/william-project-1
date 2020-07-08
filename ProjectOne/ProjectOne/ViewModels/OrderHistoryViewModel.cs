@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Project1.Domain.Model
 {
@@ -30,5 +28,4 @@ namespace Project1.Domain.Model
         public IEnumerable<StoreOrderViewModel> StoreOrder { get; set; }
     }
 }
-
 
