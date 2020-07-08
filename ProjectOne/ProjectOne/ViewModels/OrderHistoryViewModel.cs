@@ -1,65 +1,34 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Project1.Domain.Model
 {
     public class OrderHistoryViewModel
     {
-        private DateTime _date;
-        private TimeSpan _time;
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
 
-        public DateTime Date
-        {
-            get => _date;
-            set
-            {
-                if (value == null)
-                    throw new Exception("Order Date must not be null.");
-                else
-                    _date = value;
-            }
-        }
+        [Required]
+        [DataType(DataType.Time)]
+        public DateTime Time { get; set; }
 
-        public TimeSpan Time
-        {
-            get => _time;
-            set
-            {
-                if (value == null)
-                    throw new Exception("Order Time must not be null.");
-                else
-                    _time = value;
-            }
-        }
+        [Display(Name = "ID")]
+        public int Id { get; set; }
 
-
-        public int OrderId { get; set; }
+        [Display(Name = "Customer ID")]
         public int? CustomerId { get; set; }
+
+        [Display(Name = "Location ID")]
         public int? LocationId { get; set; }
 
-        public CustomerViewModel Customer { get; set; } = new CustomerViewModel();
-        public StoreLocationViewModel Location { get; set; } = new StoreLocationViewModel();
-        public List<StoreOrderViewModel> StoreOrder { get; set; } = new List<StoreOrderViewModel>();
-
-        //public override string ToString()
-        //{
-        //    string productsString = string.Join(",", Products);
-        //    return "Order: " + productsString + " | " + Store + " | " + Time;
-        //}
+        public CustomerViewModel Customer { get; set; }
+        public StoreLocationViewModel Location { get; set; }
+        public IEnumerable<StoreOrderViewModel> StoreOrder { get; set; }
     }
 }
 
 
-
-
-
-//public int OrderId { get; set; }
-//public DateTime Date { get; set; }
-//public TimeSpan Time { get; set; }
-//public int? CustomerId { get; set; }
-//public int? LocationId { get; set; }
-
-//public virtual Customer Customer { get; set; }
-//public virtual StoreLocation Location { get; set; }
-//public virtual ICollection<StoreOrder> StoreOrder { get; set; }
