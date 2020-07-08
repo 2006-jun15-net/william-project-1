@@ -23,8 +23,8 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-- script: dotnet build
-  displayName: 'dotnet build ./ProjectOne'
+- script: dotnet build ./ProjectOne
+  displayName: 'dotnet build'
 
 
 - script: |
