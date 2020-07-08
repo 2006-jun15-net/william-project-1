@@ -23,6 +23,10 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
+- script: dotnet build
+  displayName: 'dotnet build'
+
+
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
