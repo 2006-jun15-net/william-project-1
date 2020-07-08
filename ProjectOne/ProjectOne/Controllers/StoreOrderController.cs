@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ProjectOne.Controllers
 {
-    public class Product : Controller
+    public class StoreOrderController : Controller
     {
         public IActionResult Index()
         {
