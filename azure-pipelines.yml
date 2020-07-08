@@ -24,7 +24,7 @@ steps:
   displayName: 'Run a one-line script'
 
 - script: dotnet build
-  displayName: 'dotnet build'
+  displayName: 'dotnet build ./ProjectOne'
 
 
 - script: |
