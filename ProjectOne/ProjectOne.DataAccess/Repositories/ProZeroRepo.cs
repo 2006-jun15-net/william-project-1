@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Project1.Domain.Interfaces;
 using ProjectOne.DataAccess.Model;
 using System;
@@ -11,10 +12,12 @@ namespace ProjectOne.DataAccess.Repositories
     public class ProZeroRepo : IProZeroRepo
     {
         private readonly ProZeroContext _dbContext;
+        private readonly ILogger<ProZeroRepo> _logger;
 
-        public ProZeroRepo(ProZeroContext dbContext)
+        public ProZeroRepo(ProZeroContext dbContext, ILogger<ProZeroRepo> logger)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public void AddCustomer(Project1.Domain.Model.Customer customer)

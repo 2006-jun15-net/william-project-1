@@ -30,7 +30,7 @@ namespace ProjectOne
             services.AddSingleton(Configuration);
 
             services.AddDbContext<ProjectOneContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ProZeroDbConnect")));
+                    options.UseSqlServer(Configuration.GetConnectionString("ProZero")));
 
             services.AddScoped<IProZeroRepo, ProZeroRepo>();
 

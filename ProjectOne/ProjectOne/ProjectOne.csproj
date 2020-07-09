@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+    <UserSecretsId>2aa2ad2f-0526-48de-8f2b-72e78821fcf8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Project1.Domain\Project1.Domain.csproj" />
     <ProjectReference Include="..\ProjectOne.DataAccess\ProjectOne.DataAccess.csproj" />
   </ItemGroup>
 
