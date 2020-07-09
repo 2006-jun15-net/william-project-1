@@ -21,4 +21,8 @@
     <Folder Include="Views\Order\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectOne.DataAccess\ProjectOne.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

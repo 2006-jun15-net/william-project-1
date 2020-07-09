@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using ProjectOne.Data;
+using ProjectOne.DataAccess.Repositories;
+using Project1.Domain.Interfaces;
 
 namespace ProjectOne
 {
@@ -25,10 +27,14 @@ namespace ProjectOne
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddSingleton(Configuration);
 
             services.AddDbContext<ProjectOneContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ProjectOneContext")));
+                    options.UseSqlServer(Configuration.GetConnectionString("ProZeroDbConnect")));
+
+            services.AddScoped<IProZeroRepo, ProZeroRepo>();
+
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

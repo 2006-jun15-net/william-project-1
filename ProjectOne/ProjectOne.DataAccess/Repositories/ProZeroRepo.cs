@@ -32,7 +32,8 @@ namespace ProjectOne.DataAccess.Repositories
             IQueryable<Customer> items = _dbContext.Customer
                 .Include(c => c.CustomerId).AsNoTracking();
 
-            return items;
+            // TODO: This code seems fishy. I'm going to try and find this line with SonarCloud
+            return (IEnumerable<Project1.Domain.Model.Customer>)items;
         }
 
         public void RemoveCustomer(Project1.Domain.Model.Customer customer)
