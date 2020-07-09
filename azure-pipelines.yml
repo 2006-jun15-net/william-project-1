@@ -43,7 +43,7 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: '2006-jun15-net_william-project-1'
     projectName: 'William Project 1 Stores'
-    extraProperties: 'sonar.exclusions=**/lib/**'
+    extraProperties: 'sonar.exclusions=**/lib/**, **/wwwroot/**'
 
 - script: dotnet build ./ProjectOne
   displayName: 'dotnet build'
