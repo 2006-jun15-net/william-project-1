@@ -23,8 +23,7 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-- script: dotnet build ./ProjectOne
-  displayName: 'dotnet build'
+
 
 
 # - task: AzureRmWebAppDeployment@4
@@ -44,6 +43,10 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: '2006-jun15-net_william-project-1'
     projectName: 'William Project 1 Stores'
+    extraProperties: 'sonar.exclusions=**/lib/**'
+
+- script: dotnet build ./ProjectOne
+  displayName: 'dotnet build'
 
 - task: SonarCloudAnalyze@1
   displayName: sonarcloud run analysis
