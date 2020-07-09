@@ -27,13 +27,13 @@ steps:
   displayName: 'dotnet build'
 
 
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure subscription 1(4ee77189-d18b-4ba6-8d49-dac5b0422010)'
-    appType: 'webApp'
-    WebAppName: 'Project1-William-Nesham'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/publish'
+# - task: AzureRmWebAppDeployment@4
+#   inputs:
+#     ConnectionType: 'AzureRM'
+#     azureSubscription: 'Azure subscription 1(4ee77189-d18b-4ba6-8d49-dac5b0422010)'
+#     appType: 'webApp'
+#     WebAppName: 'Project1-William-Nesham'
+#     packageForLinux: '$(System.DefaultWorkingDirectory)/publish'
 
 
 
