@@ -45,6 +45,9 @@ steps:
     projectKey: '2006-jun15-net_william-project-1'
     projectName: 'William Project 1 Stores'
 
+- task: SonarCloudAnalyze@1
+  displayName: sonarcloud run analysis
+
 - task: SonarCloudPublish@1
   inputs:
     pollingTimeoutSec: '300'
