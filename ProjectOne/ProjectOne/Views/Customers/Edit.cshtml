@@ -1,4 +1,4 @@
-﻿@model Project1.Domain.Model.CustomerViewModel
+﻿@model ProjectOne.DataAccess.Model.Customer
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,12 +6,13 @@
 
 <h1>Edit</h1>
 
-<h4>CustomerViewModel</h4>
+<h4>Customer</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CustomerId" />
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
@@ -22,7 +23,6 @@
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />

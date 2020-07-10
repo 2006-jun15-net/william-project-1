@@ -1,7 +1,6 @@
 using System;
 using Xunit;
-using ProjectOne;
-using Project1.Domain.Model;
+using ProjectOne.ViewModels;
 
 namespace TestProject1
 {

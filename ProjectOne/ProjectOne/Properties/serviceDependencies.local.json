@@ -1,8 +1,10 @@
 {
   "dependencies": {
-    "mssql1": {
-      "type": "mssql.local",
-      "connectionId": "ProjectOneContext"
+    "mssql2": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/cristalline/databases/ProZero",
+      "type": "mssql.azure",
+      "connectionId": "ProjectOneContext",
+      "secretStore": "LocalSecretsFile"
     }
   }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace Project1.Domain.Model
+namespace ProjectOne.ViewModels
 {
     public class ProductViewModel
     {

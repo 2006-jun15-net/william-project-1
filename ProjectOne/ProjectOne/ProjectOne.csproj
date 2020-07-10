@@ -18,11 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Location\" />
-    <Folder Include="Views\Order\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Project1.Domain\Project1.Domain.csproj" />
     <ProjectReference Include="..\ProjectOne.DataAccess\ProjectOne.DataAccess.csproj" />
   </ItemGroup>

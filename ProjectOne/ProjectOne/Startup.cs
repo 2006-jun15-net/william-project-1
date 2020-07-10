@@ -9,9 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using ProjectOne.Data;
 using ProjectOne.DataAccess.Repositories;
 using Project1.Domain.Interfaces;
+using ProjectOne.DataAccess.Model;
 
 namespace ProjectOne
 {
@@ -29,8 +29,8 @@ namespace ProjectOne
         {
             services.AddSingleton(Configuration);
 
-            services.AddDbContext<ProjectOneContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ProZero")));
+            services.AddDbContext<ProZeroContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ProjectOneContext")));
 
             services.AddScoped<IProZeroRepo, ProZeroRepo>();
 
