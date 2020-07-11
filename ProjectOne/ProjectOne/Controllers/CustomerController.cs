@@ -3,47 +3,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ProjectOne.DataAccess.Model;
+using Project1.Domain.Interfaces;
+using Project1.Domain.Model;
+using ProjectOne.ViewModels;
 
 namespace ProjectOne.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ProZeroContext _context;
+        public IProZeroRepo Repo { get; }
 
-        public CustomerController(ProZeroContext context)
-        {
-            _context = context;
-        }
+        public CustomerController(IProZeroRepo repo) =>
+            Repo = repo ?? throw new ArgumentNullException(nameof(repo));
 
         // GET: Customer
-        public async Task<IActionResult> Index()
+        public ActionResult Index([FromQuery] string search = "")
         {
-            return View(await _context.Customer.ToListAsync());
+            ViewData["currentUser"] = "William Nesham";
+
+            IEnumerable<Customer> customers = Repo.GetCustomers(search);
+            IEnumerable<CustomerViewModel> viewModels = customers.Select(n => new CustomerViewModel
+            { 
+                Id = n.CustomerId,
+                FirstName = n.FirstName,
+                LastName = n.LastName,
+                Email = n.Email,
+                OrderHistory = n.OrderHistory.Select(o => new OrderHistoryViewModel())
+            });
+
+            return View(viewModels);
         }
 
         // GET: Customer/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var customer = await _context.Customer
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            Customer customer = Repo.GetCustomerById(id);
             if (customer == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            var viewModel = new CustomerViewModel
+            {
+                Id = customer.CustomerId,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Email = customer.Email,
+                OrderHistory = customer.OrderHistory.Select(o => new OrderHistoryViewModel())
+            };
+
+            return View(viewModel);
         }
 
         // GET: Customer/Create
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
@@ -53,31 +69,46 @@ namespace ProjectOne.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerId,FirstName,LastName,Email")] Customer customer)
+        public ActionResult Create([Bind("FirstName,LastName,Email")] CustomerViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    Repo.AddCustomer(new Customer { 
+                        FirstName = viewModel.FirstName,
+                        LastName = viewModel.LastName,
+                        Email = viewModel.Email
+                    });
+                    Repo.Save();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(viewModel);
             }
-            return View(customer);
+            catch
+            {
+                return View(viewModel);
+            }
         }
 
         // GET: Customer/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            try
+            {
+                Customer customer = Repo.GetCustomerById(id);
+                
+                return View(new CustomerViewModel{ 
+                    Id = customer.CustomerId,
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName,
+                    Email = customer.Email
+                });
+            }
+            catch
             {
                 return NotFound();
             }
-
-            var customer = await _context.Customer.FindAsync(id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-            return View(customer);
         }
 
         // POST: Customer/Edit/5
@@ -85,68 +116,66 @@ namespace ProjectOne.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,FirstName,LastName,Email")] Customer customer)
+        public ActionResult Edit(int id, [Bind("FirstName,LastName,Email")] CustomerViewModel viewModel)
         {
-            if (id != customer.CustomerId)
+            try
             {
-                return NotFound();
+                if (ModelState.IsValid)
+                {
+                    
+                    Customer customer = Repo.GetCustomerById(id);
+                    customer.FirstName = viewModel.FirstName ?? throw new DbUpdateConcurrencyException();
+                    customer.LastName = viewModel.LastName ?? throw new DbUpdateConcurrencyException();
+                    customer.Email = viewModel.Email ?? throw new DbUpdateConcurrencyException();
+                    Repo.UpdateCustomer(customer);
+                    Repo.Save(); 
+                   
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(viewModel);
             }
-
-            if (ModelState.IsValid)
+            catch (Exception)
             {
-                try
-                {
-                    _context.Update(customer);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CustomerExists(customer.CustomerId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View(viewModel);
             }
-            return View(customer);
         }
 
+        // 
         // GET: Customer/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public ActionResult Delete()//int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //var customer = Repo.GetCustomerById(id);
+            //if (customer == null)
+            //{
+            //    return NotFound();
+            //}
+            //var viewModel = new CustomerViewModel
+            //{
+            //    Id = customer.CustomerId,
+            //    FirstName = customer.FirstName,
+            //    LastName = customer.LastName,
+            //    Email = customer.Email,
+            //    OrderHistory = customer.OrderHistory.Select(x => new OrderHistoryViewModel())
+            //};
 
-            var customer = await _context.Customer
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            return View(customer);
+            //return View(viewModel);
+            return View();
         }
 
         // POST: Customer/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var customer = await _context.Customer.FindAsync(id);
-            _context.Customer.Remove(customer);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Customer customer = 
+        //    _context.Customer.Remove(customer);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool CustomerExists(int id)
         {
-            return _context.Customer.Any(e => e.CustomerId == id);
+            return Repo.GetCustomers().Any(e => e.CustomerId == id);
         }
     }
 }
