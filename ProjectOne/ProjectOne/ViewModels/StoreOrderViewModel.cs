@@ -19,4 +19,3 @@ namespace ProjectOne.ViewModels
         public int OrderId { get; set; }
     }
 }
-

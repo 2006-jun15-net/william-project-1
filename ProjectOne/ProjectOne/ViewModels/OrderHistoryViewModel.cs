@@ -28,4 +28,3 @@ namespace ProjectOne.ViewModels
         public IEnumerable<StoreOrderViewModel> StoreOrder { get; set; }
     }
 }
-

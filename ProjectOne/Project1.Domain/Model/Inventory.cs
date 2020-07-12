@@ -6,6 +6,8 @@ namespace Project1.Domain.Model
 {
     public class Inventory
     {
+        public int Id { get; set; }
+
         private int? _amount;
         public int? Amount
         {

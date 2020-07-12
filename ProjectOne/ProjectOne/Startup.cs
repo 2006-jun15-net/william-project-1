@@ -10,8 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using ProjectOne.DataAccess.Repositories;
-using Project1.Domain.Interfaces;
+//using Project1.Domain.Interfaces;
 using ProjectOne.DataAccess.Model;
+using ProjectOne.DataAccess.Interfaces;
+using ProjectOne.Data;
 
 namespace ProjectOne
 {
@@ -35,6 +37,9 @@ namespace ProjectOne
             services.AddScoped<IProZeroRepo, ProZeroRepo>();
 
             services.AddControllersWithViews();
+
+            services.AddDbContext<ProjectOneContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ProjectOneContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,6 +6,8 @@ namespace Project1.Domain.Model
 {
     public class StoreLocation
     {
+        public int Id { get; set; }
+
         private string _name;
         private string _address;
 

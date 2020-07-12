@@ -22,5 +22,3 @@ namespace ProjectOne.ViewModels
         public ProductViewModel Product { get; set; } = new ProductViewModel();
     }
 }
-
-

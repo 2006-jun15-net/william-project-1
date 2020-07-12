@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
-using Project1.Domain.Model;
+﻿using ProjectOne.DataAccess.Model;
+using System.Collections.Generic;
+//using Project1.Domain.Model;
 
-namespace Project1.Domain.Interfaces
+
+namespace ProjectOne.DataAccess.Interfaces
 {
     public interface IProZeroRepo
     {
         // Customer
-        IEnumerable<Customer> GetCustomers(string search = null);
+        IEnumerable<ProjectOne.DataAccess.Model.Customer> GetCustomers(string search = null);
         Customer GetCustomerById(int id);
         void AddCustomer(Customer customer);
         void RemoveCustomer(Customer customer);

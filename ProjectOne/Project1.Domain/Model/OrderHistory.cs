@@ -6,6 +6,8 @@ namespace Project1.Domain.Model
 {
     public class OrderHistory
     {
+        public int Id { get; set; }
+
         private DateTime _date;
         private TimeSpan _time;
 
