@@ -1,13 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ProjectOne.DataAccess.Interfaces;
-//using Project1.Domain.Interfaces;
-
+//using ProjectOne.DataAccess.Interfaces;
+using Project1.Domain.Interfaces;
 using ProjectOne.DataAccess.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 
 namespace ProjectOne.DataAccess.Repositories
 {
@@ -27,33 +25,46 @@ namespace ProjectOne.DataAccess.Repositories
         /// Add
         /// </summary>
         /// <param name="customer"></param>
-        public void AddCustomer(Customer customer)
+        public void AddCustomer(Project1.Domain.Model.Customer customer)
         {
             if (customer.CustomerId > 0)
                 _logger.LogWarning("Customer to be added has an ID ({customerId}) already: ignoring.", customer.CustomerId);
             else
                 _logger.LogInformation("Adding customer");
 
-            //Customer entity = Mapper.MapCustomer(customer);
-            customer.CustomerId = 0;
-            _dbContext.Add(customer);
+            Customer entity = Mapper.MapCustomer(customer);
+            entity.CustomerId = 0;
+            _dbContext.Add(entity);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="orderHistory"></param>
-        public void AddOrderHistory(OrderHistory orderHistory)
+        public void AddOrderHistory(Project1.Domain.Model.OrderHistory orderHistory)
         {
             throw new NotImplementedException();
         }
 
-        public void CloseStore(StoreLocation location)
+        public void CloseStore(Project1.Domain.Model.StoreLocation location)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<StoreOrder> GetCustomerOrders(Customer customer)
+        /// <summary>
+        /// Get Customer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Project1.Domain.Model.Customer GetCustomerById(int id)
+        {
+            Customer customer = _dbContext.Customer
+                .Include(c => c.FirstName != null && c.LastName != null)
+                .FirstOrDefault(c => c.CustomerId == id);
+            return Mapper.MapCustomer(customer);
+        }
+
+        public IEnumerable<Project1.Domain.Model.StoreOrder> GetCustomerOrders(Project1.Domain.Model.Customer customer)
         {
             throw new NotImplementedException();
         }
@@ -63,113 +74,106 @@ namespace ProjectOne.DataAccess.Repositories
         /// </summary>
         /// <param name="search"></param>
         /// <returns></returns>
-        public IEnumerable<Customer> GetCustomers(string search = null)
+        public IEnumerable<Project1.Domain.Model.Customer> GetCustomers(string search = null)
         {
-            IEnumerable<Customer> items = _dbContext.Customer
+            IQueryable<Customer> items = _dbContext.Customer
                 .Include(c => c.CustomerId).AsNoTracking();
 
-            if(search != null)
+            if (search != null)
             {
-                items = items.Where(c => c.FirstName.Contains(search) || c.LastName.Contains(search) || c.Email.Contains(search) );
+                items = items.Where(c => c.FirstName.Contains(search) || c.LastName.Contains(search) || c.Email.Contains(search));
             }
-            return items ?? new List<Customer>();
+            return items.Select(Mapper.MapCustomer);
         }
 
-        public IEnumerable<Inventory> GetInventories(string search = null)
+        public IEnumerable<Project1.Domain.Model.Inventory> GetInventories(string search = null)
         {
-            IEnumerable<Inventory> inventories =  _dbContext.Inventory
+            IQueryable<Inventory> inventories = _dbContext.Inventory
                 .Include(i => i.LocationId).AsNoTracking();
-            if(search != null)
+            if (search != null)
             {
+                // Why can a product have an inventory?
                 inventories = inventories.Where(i => i.Product.Name.Contains(search));
             }
-            return inventories.Where(i => i != null);
+            return inventories.Select(Mapper.MapInventory).Where(i => i != null);
         }
 
-        public void OpenNewStore(StoreLocation location)
+        public Project1.Domain.Model.Inventory GetInventoryById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void PlaceOrder(StoreOrder order)
+        public Project1.Domain.Model.StoreOrder GetOrderById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveCustomer(Customer customer)
+        public IEnumerable<Project1.Domain.Model.OrderHistory> GetOrderHistory(string search = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Project1.Domain.Model.OrderHistory GetOrderHistoryById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Project1.Domain.Model.Product GetProductById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Project1.Domain.Model.Product> GetProducts(string search = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Project1.Domain.Model.StoreLocation GetStoreLocationById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Project1.Domain.Model.StoreLocation> GetStoreLocations(string search = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OpenNewStore(Project1.Domain.Model.StoreLocation location)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlaceOrder(Project1.Domain.Model.StoreOrder order)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveCustomer(Project1.Domain.Model.Customer customer)
         {
             throw new NotImplementedException();
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
-        public void UpdateCustomer(Customer customer)
+        public void UpdateCustomer(Project1.Domain.Model.Customer customer)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateInventory(Inventory inventory)
+        public void UpdateInventory(Project1.Domain.Model.Inventory inventory)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateStore(StoreLocation location)
+        public void UpdateStore(Project1.Domain.Model.StoreLocation location)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateStoreInventory(StoreLocation location, Inventory inventory)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Customer GetCustomerById(int id)
-        {
-            Customer customer = _dbContext.Customer
-                .Include(c => c.FirstName != null && c.LastName != null)
-                .FirstOrDefault(c => c.CustomerId == id);
-            return customer;
-        }
-
-        public Inventory GetInventoryById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public StoreOrder GetOrderById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<OrderHistory> GetOrderHistory(string search)
-        {
-            throw new NotImplementedException();
-        }
-
-        public OrderHistory GetOrderHistoryById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Product GetProductById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> GetProducts(string search)
-        {
-            throw new NotImplementedException();
-        }
-
-        public StoreLocation GetStoreLocationById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<StoreLocation> GetStoreLocations(string search)
+        public void UpdateStoreInventory(Project1.Domain.Model.StoreLocation location, Project1.Domain.Model.Inventory inventory)
         {
             throw new NotImplementedException();
         }

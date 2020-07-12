@@ -10,9 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using ProjectOne.DataAccess.Repositories;
-//using Project1.Domain.Interfaces;
+using Project1.Domain.Interfaces;
 using ProjectOne.DataAccess.Model;
-using ProjectOne.DataAccess.Interfaces;
+//using ProjectOne.DataAccess.Interfaces;
 using ProjectOne.Data;
 
 namespace ProjectOne

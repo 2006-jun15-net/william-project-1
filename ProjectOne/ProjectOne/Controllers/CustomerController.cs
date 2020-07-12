@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Project1.Domain.Model;
 using ProjectOne.Data;
+//using ProjectOne.DataAccess.Interfaces;
+using Project1.Domain.Interfaces;
+//using ProjectOne.DataAccess;
 
 namespace ProjectOne.Controllers
 {
@@ -17,11 +20,21 @@ namespace ProjectOne.Controllers
         public CustomerController(ProjectOneContext context)
         {
             _context = context;
+            //Repo = context;
         }
+        //public IProZeroRepo Repo { get; }
+
+        //public CustomerController(ProjectOneContext context, IProZeroRepo repo)
+        //{
+        //    Repo = repo ?? throw new ArgumentNullException(nameof(repo));
+        //    _context = context;
+        //}
+            
 
         // GET: Customer
         public async Task<IActionResult> Index()
         {
+            //var customers = (await _context.Customer.ToListAsync()).Select(Mapper.MapCustomer);
             return View(await _context.Customer.ToListAsync());
         }
 

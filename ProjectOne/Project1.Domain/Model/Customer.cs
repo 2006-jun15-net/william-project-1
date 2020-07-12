@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace Project1.Domain.Model
 {
@@ -37,6 +37,7 @@ namespace Project1.Domain.Model
         
         // Sorta like IDs
         // (empty means they don't want to subscribe to mailing list [stretch goal])
+        [EmailAddress]
         public string Email { get; set; }
        // // Not implemented yet
        // public string DefaultLocation { get; set; }
