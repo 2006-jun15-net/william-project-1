@@ -15,7 +15,7 @@ namespace ProjectOne.DataAccess.Model
         {
         }
 
-        public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<Project1.Domain.Model.Customer> Customer { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
         public virtual DbSet<OrderHistory> OrderHistory { get; set; }
         public virtual DbSet<Product> Product { get; set; }

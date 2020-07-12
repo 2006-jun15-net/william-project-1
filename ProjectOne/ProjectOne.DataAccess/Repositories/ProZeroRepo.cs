@@ -58,10 +58,9 @@ namespace ProjectOne.DataAccess.Repositories
         /// <returns></returns>
         public Project1.Domain.Model.Customer GetCustomerById(int id)
         {
-            Customer customer = _dbContext.Customer
-                .Include(c => c.FirstName != null && c.LastName != null)
+            var customer = _dbContext.Customer
                 .FirstOrDefault(c => c.CustomerId == id);
-            return Mapper.MapCustomer(customer);
+            return customer;
         }
 
         public IEnumerable<Project1.Domain.Model.StoreOrder> GetCustomerOrders(Project1.Domain.Model.Customer customer)
@@ -76,14 +75,14 @@ namespace ProjectOne.DataAccess.Repositories
         /// <returns></returns>
         public IEnumerable<Project1.Domain.Model.Customer> GetCustomers(string search = null)
         {
-            IQueryable<Customer> items = _dbContext.Customer
-                .Include(c => c.CustomerId).AsNoTracking();
+            IEnumerable<Project1.Domain.Model.Customer> items = _dbContext.Customer;
 
             if (search != null)
             {
                 items = items.Where(c => c.FirstName.Contains(search) || c.LastName.Contains(search) || c.Email.Contains(search));
             }
-            return items.Select(Mapper.MapCustomer);
+
+            return items;
         }
 
         public IEnumerable<Project1.Domain.Model.Inventory> GetInventories(string search = null)
@@ -155,12 +154,20 @@ namespace ProjectOne.DataAccess.Repositories
 
         public void Save()
         {
-            throw new System.NotImplementedException();
+            _logger.LogInformation("Saving changes to the database");
+            _dbContext.SaveChanges();
         }
 
         public void UpdateCustomer(Project1.Domain.Model.Customer customer)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Updating customer with ID {customerId}", customer.CustomerId);
+
+            // calling Update would mark every property as Modified.
+            // this way will only mark the changed properties as Modified.
+            Project1.Domain.Model.Customer entity = _dbContext.Customer.First(c => c.CustomerId == customer.CustomerId);
+            Customer newEntity = Mapper.MapCustomer(entity);
+
+            _dbContext.Entry(newEntity).CurrentValues.SetValues(customer);
         }
 
         public void UpdateInventory(Project1.Domain.Model.Inventory inventory)
