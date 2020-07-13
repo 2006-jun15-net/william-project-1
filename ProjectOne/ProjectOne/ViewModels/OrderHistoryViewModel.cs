@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project1.Domain.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,12 +8,7 @@ namespace ProjectOne.ViewModels
     public class OrderHistoryViewModel
     {
         [Required]
-        [DataType(DataType.Date)]
-        public DateTime Date { get; set; }
-
-        [Required]
-        [DataType(DataType.Time)]
-        public DateTime Time { get; set; }
+        public DateTime DateAndTime { get; set; }
 
         [Display(Name = "ID")]
         public int Id { get; set; }

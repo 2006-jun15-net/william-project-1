@@ -32,7 +32,7 @@ namespace ProjectOne.DataAccess.Repositories
             else
                 _logger.LogInformation("Adding customer");
 
-            Customer entity = Mapper.MapCustomer(customer);
+            Model.Customer entity = Mapper.MapCustomer(customer);
             entity.CustomerId = 0;
             _dbContext.Add(entity);
         }
@@ -120,6 +120,13 @@ namespace ProjectOne.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Project1.Domain.Model.StoreOrder> GetOrders()
+        {
+            IEnumerable<Project1.Domain.Model.StoreOrder> orders = _dbContext.StoreOrder;
+
+            return orders;
+        }
+
         public Project1.Domain.Model.Product GetProductById(int id)
         {
             throw new NotImplementedException();
@@ -175,7 +182,7 @@ namespace ProjectOne.DataAccess.Repositories
             // calling Update would mark every property as Modified.
             // this way will only mark the changed properties as Modified.
             Project1.Domain.Model.Customer entity = _dbContext.Customer.First(c => c.CustomerId == customer.CustomerId);
-            Customer newEntity = Mapper.MapCustomer(entity);
+            Model.Customer newEntity = Mapper.MapCustomer(entity);
 
             _dbContext.Entry(newEntity).CurrentValues.SetValues(customer);
         }

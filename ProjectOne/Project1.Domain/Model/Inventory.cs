@@ -16,10 +16,10 @@ namespace Project1.Domain.Model
             {
                 if(value < 0)
                 {
-                    throw new Exception("Took too many products from inventory or isolation level was too weak.");
+                    throw new ArgumentException("Took too many products from inventory or isolation level was too weak.");
                 }
 
-                _amount = value ?? throw new Exception("Inventory amount cannot be null.");
+                _amount = value ?? throw new ArgumentException("Inventory amount cannot be null.");
             }
         }
 

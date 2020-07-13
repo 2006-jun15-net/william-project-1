@@ -15,7 +15,7 @@ namespace Project1.Domain.Model
             {
                 if (value.Length == 0)
                 {
-                    throw new Exception("First Name must not be empty.");
+                    throw new ArgumentException("First Name must not be empty.");
                 }
                 _firstName = value;
             }
@@ -27,7 +27,7 @@ namespace Project1.Domain.Model
             {
                 if (value.Length == 0)
                 {
-                    throw new Exception("Last Name must not be empty.");
+                    throw new ArgumentException("Last Name must not be empty.");
                 }
                 _lastName = value;
             }

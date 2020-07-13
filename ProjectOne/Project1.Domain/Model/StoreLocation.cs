@@ -24,7 +24,7 @@ namespace Project1.Domain.Model
                 }
                 else
                 {
-                    throw new Exception("Store Name must not be null.");
+                    throw new ArgumentException("Store Name must not be null.");
                 }
             }
         }
@@ -39,7 +39,7 @@ namespace Project1.Domain.Model
                 }
                 else
                 {
-                    throw new Exception("Address must not be null.");
+                    throw new ArgumentException("Address must not be null.");
                 }
             }
         }

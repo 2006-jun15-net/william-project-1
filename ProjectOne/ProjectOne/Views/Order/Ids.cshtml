@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Project1.Domain.Model.StoreOrder>
+
+@{
+    ViewData["Title"] = "Ids";
+}
+
+<h1>Index</h1>
+
+<li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Products</a>
+</li>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.OrderId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.OrderId">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

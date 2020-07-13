@@ -16,10 +16,7 @@ namespace Project1.Domain.Model
             get => _date;
             set
             {
-                if (value == null)
-                    throw new Exception("Order Date must not be null.");
-                else
-                    _date = value;
+                _date = value != null ? value : DateTime.Now.Date;
             }
         }
 
@@ -28,10 +25,7 @@ namespace Project1.Domain.Model
             get => _time;
             set
             {
-                if (value == null)
-                    throw new Exception("Order Time must not be null.");
-                else
-                    _time = value;
+                _time = value != null ? value : DateTime.Now.TimeOfDay;
             }
         }
 
