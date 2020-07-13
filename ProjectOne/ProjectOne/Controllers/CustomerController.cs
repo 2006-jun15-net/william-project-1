@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Project1.Domain.Interfaces;
+// Scaffold with domain and DataAccess
 using Project1.Domain.Model;
 using ProjectOne.ViewModels;
 
@@ -31,8 +32,7 @@ namespace ProjectOne.Controllers
                     Id = customer.CustomerId,
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
-                    Email = customer.Email,
-                    OrderHistory = customer.OrderHistory.Select(o => new OrderHistoryViewModel())
+                    Email = customer.Email
                 };
                 viewModels.Add(model);
             }
@@ -56,8 +56,7 @@ namespace ProjectOne.Controllers
                 Id = customer.CustomerId,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
-                Email = customer.Email,
-                OrderHistory = customer.OrderHistory.Select(o => new OrderHistoryViewModel())
+                Email = customer.Email
             };
 
             return View(viewModel);

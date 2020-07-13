@@ -18,7 +18,7 @@ namespace ProjectOne.ViewModels
         [Display(Name = "Product ID")]
         public int ProductId { get; set; }
 
-        public StoreLocationViewModel Location { get; set; } = new StoreLocationViewModel();
-        public ProductViewModel Product { get; set; } = new ProductViewModel();
+        public StoreLocationViewModel Location { get; set; }
+        public ProductViewModel Product { get; set; }
     }
 }

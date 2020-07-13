@@ -23,8 +23,7 @@ namespace ProjectOne.DataAccess
                 CustomerId = customer.CustomerId,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
-                Email = customer.Email,
-                OrderHistory = customer.OrderHistory.Select(MapOrderHistory).ToList()
+                Email = customer.Email
             };
         }
         public static Model.Customer MapCustomer(Project1.Domain.Model.Customer customer)
@@ -35,7 +34,7 @@ namespace ProjectOne.DataAccess
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
                 Email = customer.Email,
-                OrderHistory = customer.OrderHistory.Select(MapOrderHistory).ToList(),
+                OrderHistory = new List<Model.OrderHistory>()
             };
         }
         /// <summary>

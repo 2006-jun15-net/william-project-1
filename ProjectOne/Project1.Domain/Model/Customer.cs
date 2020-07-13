@@ -43,7 +43,6 @@ namespace Project1.Domain.Model
        // public string DefaultLocation { get; set; }
 
 
-        public List<OrderHistory> OrderHistory { get; set; } = new List<OrderHistory>();
 
         //public override string ToString()
         //{

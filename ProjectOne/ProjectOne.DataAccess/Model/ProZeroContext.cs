@@ -16,11 +16,11 @@ namespace ProjectOne.DataAccess.Model
         }
 
         public virtual DbSet<Project1.Domain.Model.Customer> Customer { get; set; }
-        public virtual DbSet<Inventory> Inventory { get; set; }
-        public virtual DbSet<OrderHistory> OrderHistory { get; set; }
-        public virtual DbSet<Product> Product { get; set; }
-        public virtual DbSet<StoreLocation> StoreLocation { get; set; }
-        public virtual DbSet<StoreOrder> StoreOrder { get; set; }
+        public virtual DbSet<Project1.Domain.Model.Inventory> Inventory { get; set; }
+        public virtual DbSet<Project1.Domain.Model.OrderHistory> OrderHistory { get; set; }
+        public virtual DbSet<Project1.Domain.Model.Product> Product { get; set; }
+        public virtual DbSet<Project1.Domain.Model.StoreLocation> StoreLocation { get; set; }
+        public virtual DbSet<Project1.Domain.Model.StoreOrder> StoreOrder { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

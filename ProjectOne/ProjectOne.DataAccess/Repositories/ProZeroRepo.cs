@@ -87,14 +87,13 @@ namespace ProjectOne.DataAccess.Repositories
 
         public IEnumerable<Project1.Domain.Model.Inventory> GetInventories(string search = null)
         {
-            IQueryable<Inventory> inventories = _dbContext.Inventory
-                .Include(i => i.LocationId).AsNoTracking();
+            IEnumerable<Project1.Domain.Model.Inventory> inventories = _dbContext.Inventory;
             if (search != null)
             {
                 // Why can a product have an inventory?
                 inventories = inventories.Where(i => i.Product.Name.Contains(search));
             }
-            return inventories.Select(Mapper.MapInventory).Where(i => i != null);
+            return inventories;
         }
 
         public Project1.Domain.Model.Inventory GetInventoryById(int id)
@@ -124,7 +123,14 @@ namespace ProjectOne.DataAccess.Repositories
 
         public IEnumerable<Project1.Domain.Model.Product> GetProducts(string search = null)
         {
-            throw new NotImplementedException();
+            IEnumerable<Project1.Domain.Model.Product> products;
+            products = _dbContext.Product;
+            if(search != null && search.Length > 0)
+            {
+                products = products.Where(p => p.Name.Contains(search));
+            }
+
+            return products;
         }
 
         public Project1.Domain.Model.StoreLocation GetStoreLocationById(int id)

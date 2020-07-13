@@ -18,11 +18,8 @@ namespace Project1.Domain.Model
                 {
                     throw new Exception("Took too many products from inventory or isolation level was too weak.");
                 }
-                if(value == null)
-                {
-                    throw new Exception("Inventory amount cannot be null.");
-                }
-                _amount = value;
+
+                _amount = value ?? throw new Exception("Inventory amount cannot be null.");
             }
         }
 

@@ -18,6 +18,6 @@ namespace ProjectOne.ViewModels
         // // Not implemented yet
         // public string DefaultLocation { get; set; }
 
-        public IEnumerable<OrderHistoryViewModel> OrderHistory { get; set; }
+        //public IEnumerable<OrderHistoryViewModel> OrderHistory { get; set; }
     }
 }
