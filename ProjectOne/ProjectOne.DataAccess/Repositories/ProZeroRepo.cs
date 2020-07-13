@@ -75,14 +75,18 @@ namespace ProjectOne.DataAccess.Repositories
         /// <returns></returns>
         public IEnumerable<Project1.Domain.Model.Customer> GetCustomers(string search = null)
         {
-            IEnumerable<Project1.Domain.Model.Customer> items = _dbContext.Customer;
+            IEnumerable<Project1.Domain.Model.Customer> customers = _dbContext.Customer;
+            IQueryable<Project1.Domain.Model.Customer> items = _dbContext.Customer;
 
             if (search != null)
             {
-                items = items.Where(c => c.FirstName.Contains(search) || c.LastName.Contains(search) || c.Email.Contains(search));
+                items = items.Select(c => c)
+                    .Where(c => (c.FirstName.Contains(search) || c.LastName.Contains(search) || c.Email.Contains(search)))
+                    .AsNoTracking();
             }
+            customers = items;
 
-            return items;
+            return customers;
         }
 
         public IEnumerable<Project1.Domain.Model.Inventory> GetInventories(string search = null)

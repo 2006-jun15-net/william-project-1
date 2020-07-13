@@ -22,22 +22,21 @@ namespace ProjectOne.Controllers
         // GET: Customer
         public ActionResult Index([FromQuery] string search = "")
         {
-            IEnumerable<Customer> customers = Repo.GetCustomers();
+            IEnumerable<Customer> customers = Repo.GetCustomers(search);
             List<CustomerViewModel> viewModels = new List<CustomerViewModel>();
+
+            if (customers == null || customers.Count() == 0) return View(viewModels);
 
             foreach (Customer customer in customers)
             {
-                CustomerViewModel model = new CustomerViewModel()
+                viewModels.Add(new CustomerViewModel()
                 {
                     Id = customer.CustomerId,
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
                     Email = customer.Email
-                };
-                viewModels.Add(model);
+                });
             }
-
-
 
             return View(viewModels);
         }
