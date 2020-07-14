@@ -19,13 +19,13 @@ namespace Project1.Domain.Model
             get => _name;
             set
             {
-                if(value.Length > 0)
+                if(value?.Length > 0)
                 {
                     _name = value;
                 }
                 else
                 {
-                    throw new ArgumentException("Store Name must not be null.");
+                    throw new ArgumentException("Store Name must not be empty.");
                 }
             }
         }
@@ -34,13 +34,13 @@ namespace Project1.Domain.Model
             get => _address;
             set
             {
-                if (value.Length > 0)
+                if (value?.Length > 0)
                 {
                     _address = value;
                 }
                 else
                 {
-                    throw new ArgumentException("Address must not be null.");
+                    throw new ArgumentException("Address must not be empty.");
                 }
             }
         }
