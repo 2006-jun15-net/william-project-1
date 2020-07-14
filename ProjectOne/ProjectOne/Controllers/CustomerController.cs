@@ -74,25 +74,26 @@ namespace ProjectOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("FirstName,LastName,Email")] CustomerViewModel viewModel)
         {
-            try
-            {
+            //try
+            //{
                 if (ModelState.IsValid)
                 {
                     Repo.AddCustomer(new Customer
                     {
                         FirstName = viewModel.FirstName,
                         LastName = viewModel.LastName,
-                        Email = viewModel.Email
+                        Email = viewModel.Email,
+                        CustomerId = 0
                     });
                     Repo.Save();
                     return RedirectToAction(nameof(Index));
                 }
                 return View(viewModel);
-            }
-            catch
-            {
-                return View(viewModel);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return View(ex.Message);
+            //}
         }
 
         // GET: Customer/Edit/5
