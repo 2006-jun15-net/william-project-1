@@ -14,6 +14,7 @@ namespace ProjectOne.ViewModels
 
         // (empty means they don't want to subscribe to mailing list [stretch goal])
         [EmailAddress]
+        [Required]
         public string Email { get; set; }
         // // Not implemented yet
         // public string DefaultLocation { get; set; }

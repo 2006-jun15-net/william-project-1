@@ -33,23 +33,22 @@ namespace ProjectOne.Controllers
 
 
 
-        //// GET: Product/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Product/Details/5
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var product = await _context.Product
-        //        .FirstOrDefaultAsync(m => m.ProductId == id);
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var product = Repo.GetProductById(id ?? default);
+            if (product == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(product);
-        //}
+            return View(product);
+        }
 
         //// GET: Product/Create
         //public IActionResult Create()
