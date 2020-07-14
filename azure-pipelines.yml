@@ -43,6 +43,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
+    projects: 'ProjectOne/TestProject1'
     testRunTitle: 'Run Unit Tests'
 
 # - task: AzureRmWebAppDeployment@4
