@@ -8,8 +8,6 @@ namespace Project1.Domain.Model
 {
     public class StoreOrder
     {
-        //public int Id { get; set; }
-
         private int? _amount;
 
         public int? Amount
@@ -27,9 +25,12 @@ namespace Project1.Domain.Model
                 }
             }
         }
-        [Key, Column(Order = 0)]
+        [Required]
+        //[Key, Column(Order = 0)]
         public int ProductId { get; set; }
-        [Key, Column(Order = 1)]
+        [Required]
+        //[Key, Column(Order = 1)]
+        [Key]
         public int OrderId { get; set; }
     }
 }

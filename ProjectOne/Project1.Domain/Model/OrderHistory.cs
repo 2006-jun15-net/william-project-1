@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Project1.Domain.Model
 {
     public class OrderHistory
     {
-        public int Id { get; set; }
 
         private DateTime _date;
         private TimeSpan _time;
@@ -29,14 +29,14 @@ namespace Project1.Domain.Model
             }
         }
 
-
+        [Key]
         public int OrderId { get; set; }
         public int? CustomerId { get; set; }
         public int? LocationId { get; set; }
 
-        public Customer Customer { get; set; } = new Customer();
-        public StoreLocation Location { get; set; } = new StoreLocation();
-        public List<StoreOrder> StoreOrder { get; set; } = new List<StoreOrder>();
+        public Customer Customer { get; set; }
+        public StoreLocation Location { get; set; }
+        public List<StoreOrder> StoreOrder { get; set; }
 
         //public override string ToString()
         //{

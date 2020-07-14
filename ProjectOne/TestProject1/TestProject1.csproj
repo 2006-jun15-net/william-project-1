@@ -17,6 +17,10 @@
     <ProjectReference Include="..\ProjectOne\ProjectOne.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Model\" />
+  </ItemGroup>
+
   
 
 </Project>

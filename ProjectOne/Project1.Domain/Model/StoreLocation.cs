@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Project1.Domain.Model
 {
     public class StoreLocation
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         private string _name;
         private string _address;
-
+        [Key]
         public int LocationId { get; set; }
 
         public string Name

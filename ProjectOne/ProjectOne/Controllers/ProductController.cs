@@ -21,7 +21,7 @@ namespace ProjectOne.Controllers
         // GET: Product
         public ActionResult Index([FromQuery] string search = "")
         {
-            var prods = Repo.GetProducts(search).ToList();
+            var prods = Repo.GetProducts(search);
             //List<Product> products = new List<Product>();
             //foreach(Product prod in prods)
             //{

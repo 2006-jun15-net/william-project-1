@@ -21,6 +21,9 @@ namespace ProjectOne.ViewModels
 
         public CustomerViewModel Customer { get; set; }
         public StoreLocationViewModel Location { get; set; }
-        public IEnumerable<StoreOrderViewModel> StoreOrder { get; set; }
+        //Please don't break
+        public StoreOrderViewModel StoreOrder { get; set; }
+
+        public Product Product { get; set; }
     }
 }

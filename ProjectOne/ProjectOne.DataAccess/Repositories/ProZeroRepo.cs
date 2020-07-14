@@ -75,16 +75,20 @@ namespace ProjectOne.DataAccess.Repositories
         /// <returns></returns>
         public IEnumerable<Project1.Domain.Model.Customer> GetCustomers(string search = null)
         {
-            IEnumerable<Project1.Domain.Model.Customer> customers = _dbContext.Customer;
-            IQueryable<Project1.Domain.Model.Customer> items = _dbContext.Customer;
+            IEnumerable<Project1.Domain.Model.Customer> customers;
+            
 
             if (search != null)
             {
-                items = items.Select(c => c)
+                customers = _dbContext.Customer.Select(c => c)
                     .Where(c => (c.FirstName.Contains(search) || c.LastName.Contains(search) || c.Email.Contains(search)))
                     .AsNoTracking();
+               
+            } else
+            {
+                customers = _dbContext.Customer;
             }
-            customers = items;
+            
 
             return customers;
         }
@@ -105,40 +109,63 @@ namespace ProjectOne.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public Project1.Domain.Model.StoreOrder GetOrderById(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //public Project1.Domain.Model.StoreOrder GetOrderById(int id)
+        //{
+        //    //Project1.Domain.Model.StoreOrder storeOrder = _dbContext.StoreOrder
+        //    //    .Select(c => c)
+        //    //    .Where(c => c.OrderId == id);
+        //    //.AsEnumerable()
+        //    //.Where(c => c.OrderId == id)
+        //    //.FirstOrDefault();
+        //    //var ent = _dbContext.OrderHistory
+        //    //    .Where(o => o.OrderId == id)
+        //    //    .First();
+        //    throw new NotImplementedException();
+        //    return  new Project1.Domain.Model.StoreOrder(); //storeOrder ??
+        //}
 
         public IEnumerable<Project1.Domain.Model.OrderHistory> GetOrderHistory(string search = null)
         {
-            throw new NotImplementedException();
+            if(search != null)
+            {
+                return _dbContext.OrderHistory
+                    .Where(oh => oh.Customer.FirstName.Contains(search) 
+                    || oh.Customer.LastName.Contains(search)
+                    || oh.Customer.Email.Contains(search));
+            }
+            return _dbContext.OrderHistory;
         }
 
         public Project1.Domain.Model.OrderHistory GetOrderHistoryById(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.OrderHistory.First(o => o.OrderId == id);
         }
 
-        public IEnumerable<Project1.Domain.Model.StoreOrder> GetOrders()
+        public IEnumerable<Project1.Domain.Model.StoreOrder> GetOrderIds()
         {
-            IEnumerable<Project1.Domain.Model.StoreOrder> orders = _dbContext.StoreOrder;
+            IEnumerable<Project1.Domain.Model.StoreOrder> orders = _dbContext.StoreOrder
+                .Select(x => new StoreOrder{Amount = x.Amount, OrderId = x.OrderId, ProductId = x.ProductId })
+                .Select(Mapper.MapStoreOrder);
+
 
             return orders;
         }
 
         public Project1.Domain.Model.Product GetProductById(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Product.First(p => p.ProductId == id);
         }
 
         public IEnumerable<Project1.Domain.Model.Product> GetProducts(string search = null)
         {
             IEnumerable<Project1.Domain.Model.Product> products;
-            products = _dbContext.Product;
+
             if(search != null && search.Length > 0)
             {
-                products = products.Where(p => p.Name.Contains(search));
+                products = _dbContext.Product.Where(p => p.Name.Contains(search));
+            } else
+            {
+                products = _dbContext.Product;
             }
 
             return products;
@@ -146,7 +173,7 @@ namespace ProjectOne.DataAccess.Repositories
 
         public Project1.Domain.Model.StoreLocation GetStoreLocationById(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.StoreLocation.First(l => l.LocationId == id);
         }
 
         public IEnumerable<Project1.Domain.Model.StoreLocation> GetStoreLocations(string search = null)

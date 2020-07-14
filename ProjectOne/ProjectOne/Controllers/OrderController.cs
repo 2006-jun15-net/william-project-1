@@ -22,33 +22,40 @@ namespace ProjectOne.Controllers
         // GET: OrderHistoryController
         public ActionResult Index([FromQuery] string search = "")
         {
-            IEnumerable<Project1.Domain.Model.StoreOrder> allOrders = Repo.GetOrders();
-            //IEnumerable<Project1.Domain.Model.OrderHistory> histories = Repo.GetOrderHistory();
-            //List<int> orderIds = allOrders.Select(a => a.OrderId).ToList();
+            IEnumerable<Project1.Domain.Model.OrderHistory> histories = Repo.GetOrderHistory();
+
             List<OrderHistoryViewModel> viewModels = new List<OrderHistoryViewModel>();
 
-            foreach(Project1.Domain.Model.StoreOrder idos in allOrders.ToList())
+            foreach(Project1.Domain.Model.OrderHistory hist in histories.ToList())
             {
-                var history = Repo.GetOrderHistoryById(idos.OrderId);
-                var customer = history.Customer;
-                //var customer = Repo.GetCustomerById(history.CustomerId ?? default);
+                var customer = Repo.GetCustomerById(hist.CustomerId ?? default);
+                var location = Repo.GetStoreLocationById(hist.LocationId ?? default);
+                var order = Repo.GetOrderIds().First(o => o.OrderId == hist.OrderId);
+                var product = Repo.GetProductById(order.ProductId);
+
                 viewModels.Add(new OrderHistoryViewModel
                 {
-                    DateAndTime = history.Date.Add(history.Time),
+                    DateAndTime = hist.Date.Add(hist.Time),
                     Customer = new CustomerViewModel{
                         FirstName = customer.FirstName, LastName = customer.LastName, Email = customer.Email
                     },
-                    StoreOrder = history.StoreOrder.Select(s => new StoreOrderViewModel()).Where(c => c.OrderId == history.OrderId),
-                    CustomerId = customer.CustomerId,
-                    Id = idos.OrderId,
-                    Location = new StoreLocationViewModel {
-                        Id=history.LocationId ?? default,
-                        OrderHistory = new List<OrderHistoryViewModel>(),
-                        Address = history.Location.Address,
-                        Name = history.Location.Name,
-                        Inventory = history.Location.Inventory.Select(x => new InventoryViewModel())
+                    StoreOrder = new StoreOrderViewModel
+                    {
+                        Amount = order.Amount,
+                        ProductId = order.ProductId,
+                        OrderId = order.OrderId
                     },
-                    LocationId = history.LocationId
+                    CustomerId = customer.CustomerId,
+                    Id = hist.OrderId,
+                    Location = new StoreLocationViewModel {
+                        Id= hist.LocationId ?? default,
+                        OrderHistory = new List<OrderHistoryViewModel>(),
+                        Address = location.Address,
+                        Name = location.Name,
+                        Inventory = hist.Location.Inventory.Select(x => new InventoryViewModel())
+                    },
+                    LocationId = hist.LocationId ?? default,
+                    Product = product
                 });
             }
 
@@ -57,12 +64,12 @@ namespace ProjectOne.Controllers
 
         public ActionResult CustomerOrders([FromRoute]int id, [FromQuery] string search = "")
         {
-            //IEnumerable<Project1.Domain.Model.StoreOrder> allOrders = Repo.GetOrders();
             Project1.Domain.Model.OrderHistory history = Repo.GetOrderHistoryById(id);
             List<OrderHistoryViewModel> viewModels = new List<OrderHistoryViewModel>();
-           
+            var order = Repo.GetOrderIds().First(o => o.OrderId == history.OrderId);
+            var product = Repo.GetProductById(order.ProductId);
             var customer = history.Customer;
-            //var customer = Repo.GetCustomerById(history.CustomerId ?? default);
+
             viewModels.Add(new OrderHistoryViewModel
             {
                 DateAndTime = history.Date.Add(history.Time),
@@ -72,7 +79,12 @@ namespace ProjectOne.Controllers
                     LastName = customer.LastName,
                     Email = customer.Email
                 },
-                StoreOrder = history.StoreOrder.Select(s => new StoreOrderViewModel()).Where(c => c.OrderId == history.OrderId),
+                StoreOrder = new StoreOrderViewModel
+                {
+                    Amount = order.Amount,
+                    ProductId = order.ProductId,
+                    OrderId = order.OrderId
+                },
                 CustomerId = customer.CustomerId,
                 Id = id,
                 Location = new StoreLocationViewModel
@@ -83,17 +95,55 @@ namespace ProjectOne.Controllers
                     Name = history.Location.Name,
                     Inventory = history.Location.Inventory.Select(x => new InventoryViewModel())
                 },
-                LocationId = history.LocationId
+                LocationId = history.LocationId,
+                Product = product
             });
 
-            return View(); //ToDo
-            //return View(viewModels);
+            /////// ToDo
+            return View(viewModels);
         }
 
         // GET: OrderHistoryController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Project1.Domain.Model.OrderHistory history = Repo.GetOrderHistoryById(id);
+
+            List<OrderHistoryViewModel> viewModels = new List<OrderHistoryViewModel>();
+           
+            var customer = Repo.GetCustomerById(history.CustomerId ?? default);
+            var location = Repo.GetStoreLocationById(history.LocationId ?? default);
+            var order = Repo.GetOrderIds().First(o => o.OrderId == history.OrderId);
+            var product = Repo.GetProductById(order.ProductId);
+
+            viewModels.Add(new OrderHistoryViewModel
+            {
+                DateAndTime = history.Date.Add(history.Time),
+                Customer = new CustomerViewModel
+                {
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName,
+                    Email = customer.Email
+                },
+                StoreOrder = new StoreOrderViewModel { 
+                    Amount = order.Amount,
+                    ProductId = order.ProductId,
+                    OrderId = order.OrderId
+                },
+                CustomerId = customer.CustomerId,
+                Id = history.OrderId,
+                Location = new StoreLocationViewModel
+                {
+                    Id = history.LocationId ?? default,
+                    OrderHistory = new List<OrderHistoryViewModel>(),
+                    Address = location.Address,
+                    Name = location.Name,
+                    Inventory = location.Inventory.Select(x => new InventoryViewModel())
+                },
+                LocationId = history.LocationId ?? default,
+                Product = product
+            }); ;
+
+            return View(viewModels);
         }
 
         // GET: OrderHistoryController/Create

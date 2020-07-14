@@ -16,6 +16,7 @@ namespace ProjectOne.ViewModels
         public decimal? Price { get; set; }
 
         [Display(Name = "ID")]
+        [Key]
         public int Id { get; set; }
 
         public IEnumerable<InventoryViewModel> Inventory { get; set; }

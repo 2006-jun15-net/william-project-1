@@ -42,9 +42,9 @@ namespace Project1.Domain.Interfaces
         //
 
         // Store Order
-        IEnumerable<StoreOrder> GetOrders(); // Contains IDs
+        IEnumerable<StoreOrder> GetOrderIds(); // Contains IDs
         IEnumerable<StoreOrder> GetCustomerOrders(Customer customer);
-        StoreOrder GetOrderById(int id);
+        //StoreOrder GetOrderById(int id);
         void PlaceOrder(StoreOrder order);
         //
 
